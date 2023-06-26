@@ -1,12 +1,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 #include "gradebook.h"
 
-
-//Implement constructor for class Deliverable:
-    //Set the values of name, category, and grade
-    
 Gradebook::Gradebook(std::string file_name, std::vector<string> individualNames, std::vector<string> categories, std::vector<int> grades, std::vector<int> overall){
     this->file_name = file_name;
     this->individualNames = individualNames;
@@ -14,73 +11,100 @@ Gradebook::Gradebook(std::string file_name, std::vector<string> individualNames,
     this->grades = grades;
     this->overall = overall;
 }
-    
-//Implement method add_deliverable for class Course:
-    //Create a new Deliverable object with the given name,category, and grade
-    //Add the new Deiverable object to the deliverables array
-    
 double IndiGrade(std::string name){
+    for(int i = 0; invdivdualNames.size(); i++){
+        if(individualNames[i] == name){
+            return grades[i];
+        }
+        return 0;
+    }
 
 }
 
-    
-//Implement method get_grade for class Course:
-    //Iterate over each deliverable in the deliverables array
-    //If the name of the deliverable matches the given name 
-        //Return the grade of the deliverable
-    //Return -1 to indicate that the deliiverable was not found
-    
-
-    
-//Implement method get_category for class Course:
-    //Set total to 0
-    //Iterate over each deliverable in the deliverables array
-        //If the category of the deliverable matches the given category 
-            //Add the grade of the deliverable to total
-        //Return total 
-
 double CategoryGrade(std::string category){
-
+    double total = 0;
+    int count = 0;
+    for(int i = 0; categories.size(); i++) {
+        if (categories[i] == category) {
+            total += grades[i];
+            count;
+        }
+    }
+    if(count > 0){
+        return/count;
+    }
+    else{
+        return 0;
+    }
 }
 
 double CourseGradeOption(int option){
+    double total = 0;
+    if(option == 1){
+        for(int i = 0; categories.size(); i++) {
+            total += grades[i];
+        }
+    }else if(option == 2) {
+        for(int i = 0; categories.size(); i++){
+            if(categories[i] != "Overall"){
+                std::cout << categories[i] ": " << CategoryGrade(categories[i]) << std::endl;
+                }
+            }
+            std::cout << "Course Overall: " << overall[0] << std::endl;
+        } else if (option == 3){
+            return overall[0];
+    }
+    return total;
+}
 
+void GradeBook::printAll(){
+    for(int i = 0; i < individualNames.size(); i++){
+        std::cout << individualNames[i] << ": " << grades[i] << std::endl;
+    }
 }
 
 void Gradebook::changeName(std::string oldName, std::string newName){
-
+    for(int i = 0; i < individualNames.size(); i++){
+        if(individualNames[i] == oldName){
+            individualNames[i] = newName;
+            return;
+        }
+    }
 }
 
 void changeCategory(std::string individualNames, std::newCategory){
-
+    for(int i = 0; i < individualNames.size(); i++){
+        if(individualNames[i] == individualName{
+            categories[i] = newCategory;
+            return;
+        }
+    }
 }
-// Implement method Semester_grade for class Course:
-//     Set categoryWeight to 0.4
-//     Set individualWeight to 0.6
-//     Set categoryTotal to 0
-//     Iterate over each deliverable in the deliverables array
-//         Add the grade of the deliverable to categoryTotal
-//     Multiply categoryTotal by categoryWeight
-//     Set individualTotal to 0
-//     Iterate over each deliverable in the deliverables 
-//         Add the grade of the deliverable to individualTotals
-//     Multiply individualTotal by individualTotal 
-//     Return the sum of categoryTotal and individualTotals
-    
-// Implement method updte_grade for class Course:
-//     Iterate over each deliverable in the deliverables array
-//         If the name of the dilverable matches the given name 
-//         Set the grade of the deliverable to newGrade
-//         Break
 
 void changeGrade(std::string individualNames, int newGrade){
-
+    for(int i = 0; i < individualNames.size(); i++){
+        if(individualNames[i] == individualName{
+                grades[i] = newGrade;
+                return;
+        }
+    }
 }
 
 void addNew(std::string newIndividual, std::string newCategory, int newGrade){
+    this->individualNames.push_back(newIndividual);
+    this->categories.push_back(newCategory);
+    this->grades.push_back(newGrade);
 
 }
 
 void save(){
-
+    std::ofstream outputFile(file_name);
+    if(outputFile.is_open()){
+        for(int i = 0; i < individualNames.size(); i++){
+            outputFile << individualNames[i] << "," << categories[i] << "," << grades[i] << std::endl;
+        }
+        outputFile.close();
+    }else {
+        std::cerr << "Unable to open" <<std::endl;
+    }
 }
