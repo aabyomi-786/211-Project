@@ -123,7 +123,7 @@ Int main
 ![alt_text](images/image1.png "image_tooltip")
 
 
-## **Gradebook.h pseudocode **
+## **Gradebook.h pseudocode**
 
 CLASS GradeBook
 
