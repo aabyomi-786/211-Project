@@ -12,7 +12,7 @@ Gradebook::Gradebook(std::string file_name, std::vector<string> individualNames,
     this->overall = overall;
 }
 double IndiGrade(std::string name){
-    for(int i = 0; invdivdualNames.size(); i++){
+    for(int i = 0; individualNames.size(); i++){
         if(individualNames[i] == name){
             return grades[i];
         }
