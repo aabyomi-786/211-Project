@@ -6,9 +6,23 @@
 #include <fstream>
 #include "gradebook.h"
 using namespace std;
+
 int main() {
-   
-    }
+    std::string fileName = "grades.txt";  // Replace with your input file name
+
+    GradeBook gradeBook(fileName);
+    gradeBook.printIndividualGrade("Deliverable 1");
+    gradeBook.printIndividualGrade("Deliverable 2");
+
+    gradeBook.printCategoryGrades("Category 1");
+    gradeBook.printCategoryGrades("Category 2");
+    gradeBook.printCategoryTotals();
+
+    gradeBook.printCourseOverall();
+
+    gradeBook.writeOutput();
 
     return 0;
 }
+
+   
