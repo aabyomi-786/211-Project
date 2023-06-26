@@ -1,4 +1,4 @@
-**CSC 212 Project Report**
+<font size="3"> **CSC 212 Project Report** </font>
 
 Due: June 26th, 2023
 
