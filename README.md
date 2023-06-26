@@ -1,8 +1,6 @@
-<font size="3"> **CSC 212 Project Report** </font>
+# **CSC 212 Project Report**
 
-Due: June 26th, 2023
-
-**Group Members and Contributions**
+## **Group Members and Contributions**
 
 
 <table>
@@ -59,11 +57,11 @@ Due: June 26th, 2023
 </table>
 
 
-**Program Summary**
+## **Program Summary**
 
 This program calculates and outputs a student's grades based on the category of the users choosing. The user can receive all grades in their respective categories and the course overall, only the course totals and overall, or just the overall grade. The user can also write a new entry into the input file, change a student's name, the grade category, or grade, and save all changes. The program utilizes a gradebook class to maximize efficiency and increase code reusability. We divided the program into a main.cpp file, a gradebook.cpp file, and a gradebook.h header file. Specific purposes of each file will be listed below. 
 
-**Compilation and Runtime Instructions**
+## **Compilation and Runtime Instructions**
 
 This program will compile and run on any modern IDE of your choosing. If you do not already have an IDE, please watch [this video](https://www.youtube.com/watch?v=pGdDt_Kw76A) to install and setup the CLion IDE by JetBrains. 
 
@@ -75,7 +73,7 @@ g++ main.cpp gradebook.cpp gradebook.h -o prog && ./prog *YOUR TEXT FILE HERE*
 
 Compile time will be near-instant. Runtime will vary based on the size of your text file.
 
-**Purpose of each program file**
+## **Purpose of each program file**
 
 Main.cpp - Read in users file data, get grades from specific categories, call to gradebook.cpp file with the file data.
 
@@ -83,7 +81,7 @@ Gradebook.cpp - Defines all functions that can be called in the gradebook class.
 
 Gradebook.h - Creates the gradebook class and vectors for students names, grades, and category percentages. Declares all functions that can be used in gradebook.cpp, linking them to the class. 
 
-**Main.cpp Pseudocode**
+## **Main.cpp Pseudocode**
 
 //Include Libraries, gradebook.cpp and gradebook.h
 
@@ -115,7 +113,7 @@ Int main
 
 	Output the students name and their final grade
 
-**Main.cpp Flowchart**
+## **Main.cpp Flowchart**
 
 
 
@@ -125,7 +123,7 @@ Int main
 ![alt_text](images/image1.png "image_tooltip")
 
 
-**Gradebook.h pseudocode **
+## **Gradebook.h pseudocode **
 
 CLASS GradeBook
 
@@ -265,7 +263,7 @@ CLASS GradeBook
 
 END CLASS
 
-**Gradebook.cpp pseudocode**
+## **Gradebook.cpp pseudocode**
 
 //Include Libraries and gradebook.h
 
