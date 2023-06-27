@@ -97,8 +97,6 @@ addNew(STRING name, STRING category, INT ) - Adds an entry for a new student
 
 save() - Saves gradebook data
 
-## **Example of program in use**
-
 ## **Purpose of each program file**
 
 Main.cpp - Read in users file data, get grades from specific categories, call to gradebook.cpp file with the file data.
