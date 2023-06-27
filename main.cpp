@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    // Example usage
+   // declaring strings, categories, grades and overalls
     std::vector<std::string> individualNames = {"Assignment 1", "Assignment 2"};
     std::vector<std::string> categories = {"Assignments", "Exams"};
     std::vector<int> grades = {90, 85};
