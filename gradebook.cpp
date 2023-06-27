@@ -1,124 +1,165 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
 #include "gradebook.h"
 
-//Gradebook constructor
-GradeBook::GradeBook(std::string file_name, std::vector<std::string> individualNames, std::vector<std::string> categories, std::vector<int> grades, std::vector<int> overall) {
-    this->file_name = file_name;
-    this->individualNames = individualNames;
-    this->categories = categories;
-    this->grades = grades;
-    this->overall = overall;
-}
+GradeBook::GradeBook(const std::string& filename,
+                     const std::vector<std::string>& individualNames,
+                     const std::vector<std::string>& categories,
+                     const std::vector<int>& grades,
+                     const std::vector<int>& overall)
+    : filename(filename),
+      individualNames(individualNames),
+      categories(categories),
+      grades(grades),
+      overall(overall) {}
 
-//Returns the grade of an individual student
-double GradeBook::IndiGrade(std::string name) {
-    for (int i = 0; i < individualNames.size(); i++) {
-        if (individualNames[i] == name) {
-            return grades[i];
-        }
+double GradeBook::IndiGrade(const std::string& deliverable) const {
+    int index = findDeliverableIndex(deliverable);
+    if (index == -1) {
+        std::cerr << "Deliverable not found: " << deliverable << std::endl;
+        return 0.0;
     }
-    return 0;
+
+    return grades[index];
 }
 
-//Returns the average grade for a specific category
-double GradeBook::CategoryGrade(std::string category) {
-    double total = 0;
+double GradeBook::CategoryGrade(const std::string& category) const {
+    double categoryTotal = 0.0;
     int count = 0;
-    for (int i = 0; i < categories.size(); i++) {
+
+    for (size_t i = 0; i < categories.size(); ++i) {
         if (categories[i] == category) {
-            total += grades[i];
-            count++;
+            categoryTotal += grades[i];
+            ++count;
         }
     }
-    if (count > 0) {
-        return total / count;
-    }
-    else {
-        return 0;
-    }
+
+    return categoryTotal / count;
 }
 
-//Returns the course grade based on the specified option
-double GradeBook::CourseGradeOption(int option) {
-    double total = 0;
-    if (option == 1) {
-        //Calculates the total grade by summing all individual grades
-        for (int i = 0; i < categories.size(); i++) {
-            total += grades[i];
-        }
+void GradeBook::printAll() const {
+    for (size_t i = 0; i < individualNames.size(); ++i) {
+        std::cout << "Individual: " << individualNames[i] << std::endl;
+        std::cout << "Category: " << categories[i] << std::endl;
+        std::cout << "Grade: " << grades[i] << std::endl;
+        std::cout << std::endl;
     }
-    else if (option == 2) {
-        //Prints each category grade(excluding Overall) and the overall course grade
-        for (int i = 0; i < categories.size(); i++) {
-            if (categories[i] != "Overall") {
-                std::cout << categories[i] << ": " << CategoryGrade(categories[i]) << std::endl;
+
+    double overallGrade = 0.0;
+    for (int grade : overall) {
+        overallGrade += grade;
+    }
+    overallGrade /= overall.size();
+
+    std::cout << "Overall Grade: " << overallGrade << std::endl;
+}
+
+void GradeBook::CourseGradeOption(int option) const {
+    double courseGrade = 0.0;
+    switch (option) {
+        case 1:  // Average of all grades
+            for (int grade : overall) {
+                courseGrade += grade;
             }
+            courseGrade /= overall.size();
+            break;
+        case 2:  // Weighted average of categories
+            double categoryWeight = 0.0;
+            for (const std::string& category : categories) {
+                if (category == "Assignments") {
+                    categoryWeight += 0.4;
+                } else if (category == "Labs") {
+                    categoryWeight += 0.2;
+                } else if (category == "Projects") {
+                    categoryWeight += 0.3;
+                } else if (category == "Exams") {
+                    categoryWeight += 0.5;
+                }
+            }
+
+            double weightedTotal = 0.0;
+            for (size_t i = 0; i < individualNames.size(); ++i) {
+                if (categories[i] == "Assignments") {
+                    weightedTotal += grades[i] * 0.4;
+                } else if (categories[i] == "Labs") {
+                    weightedTotal += grades[i] * 0.2;
+                } else if (categories[i] == "Projects") {
+                    weightedTotal += grades[i] * 0.3;
+                } else if (categories[i] == "Exams") {
+                    weightedTotal += grades[i] * 0.5;
+                }
+            }
+
+            courseGrade = weightedTotal / categoryWeight;
+                       return;
+    }
+
+    std::cout << "Course Grade: " << courseGrade << std::endl;
+}
+
+void GradeBook::changeName(const std::string& deliverable, const std::string& newName) {
+    int index = findDeliverableIndex(deliverable);
+    if (index == -1) {
+        std::cerr << "Deliverable not found: " << deliverable << std::endl;
+        return;
+    }
+
+    individualNames[index] = newName;
+    std::cout << "Name changed successfully.\n";
+}
+
+void GradeBook::changeCategory(const std::string& deliverable, const std::string& newCategory) {
+    int index = findDeliverableIndex(deliverable);
+    if (index == -1) {
+        std::cerr << "Deliverable not found: " << deliverable << std::endl;
+        return;
+    }
+
+    categories[index] = newCategory;
+    std::cout << "Category changed successfully.\n";
+}
+
+void GradeBook::changeGrade(const std::string& deliverable, int newGrade) {
+    int index = findDeliverableIndex(deliverable);
+    if (index == -1) {
+        std::cerr << "Deliverable not found: " << deliverable << std::endl;
+        return;
+    }
+
+    grades[index] = newGrade;
+    std::cout << "Grade changed successfully.\n";
+}
+
+void GradeBook::addNew(const std::string& name, const std::string& category, int grade) {
+    individualNames.push_back(name);
+    categories.push_back(category);
+    grades.push_back(grade);
+    overall.push_back(grade);
+
+    std::cout << "New grade added successfully.\n";
+}
+
+int GradeBook::findDeliverableIndex(const std::string& deliverable) const {
+    for (size_t i = 0; i < individualNames.size(); ++i) {
+        if (individualNames[i] == deliverable) {
+            return i;
         }
-        std::cout << "Course Overall: " << overall[0] << std::endl;
     }
-    else if (option == 3) {
-        //Returns the overall course grade
-        return overall[0];
-    }
-    return total;
+    return -1;
 }
 
-//Print all individual grades
-void GradeBook::printAll() {
-    for (int i = 0; i < individualNames.size(); i++) {
-        std::cout << individualNames[i] << ": " << grades[i] << std::endl;
+void GradeBook::save() const {
+    std::ofstream outputFile(filename);
+
+    if (!outputFile) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        return;
     }
+
+    for (size_t i = 0; i < individualNames.size(); ++i) {
+        outputFile << individualNames[i] << " " << categories[i] << " " << grades[i] << std::endl;
+    }
+
+    outputFile.close();
+
+    std::cout << "Changes saved to file: " << filename << std::endl;
 }
 
-//Change the name of an invdividual student 
-void GradeBook::changeName(std::string oldName, std::string newName) {
-    for (int i = 0; i < individualNames.size(); i++) {
-        if (individualNames[i] == oldName) {
-            individualNames[i] = newName;
-            return;
-        }
-    }
-}
-
-//Change the category of an individual student 
-void GradeBook::changeCategory(std::string individualName, std::string newCategory) {
-    for (int i = 0; i < individualNames.size(); i++) {
-        if (individualNames[i] == individualName) {
-            categories[i] = newCategory;
-            return;
-        }
-    }
-}
-
-//Change the grade of an individual student 
-void GradeBook::changeGrade(std::string individualName, int newGrade) {
-    for (int i = 0; i < individualNames.size(); i++) {
-        if (individualNames[i] == individualName) {
-            grades[i] = newGrade;
-            return;
-        }
-    }
-}
-
-//Adds a new entrt for an individual student 
-void GradeBook::addNew(std::string newIndividual, std::string newCategory, int newGrade) {
-    individualNames.push_back(newIndividual);
-    categories.push_back(newCategory);
-    grades.push_back(newGrade);
-}
-
-//Saves gradebook data
-void GradeBook::save() {
-    std::ofstream outputFile(file_name);
-    if (outputFile.is_open()) {
-        for (int i = 0; i < individualNames.size(); i++) {
-            outputFile << individualNames[i] << "," << categories[i] << "," << grades[i] << std::endl;
-        }
-        outputFile.close();
-    }
-    else {
-        std::cerr << "Unable to open file: " << file_name << std::endl;
-    }
-}
