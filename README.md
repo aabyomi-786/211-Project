@@ -1,5 +1,7 @@
 # **CSC 212 Project Report**
 
+Due: June 26th, 2023
+
 ## **Group Members and Contributions**
 
 
@@ -19,9 +21,9 @@
    </td>
    <td>Main.cpp file
    </td>
-   <td>
+   <td>June 6th, 2023
    </td>
-   <td>
+   <td>June 26th, 2023
    </td>
   </tr>
   <tr>
@@ -29,9 +31,9 @@
    </td>
    <td>Gradebook.h file
    </td>
-   <td>
+   <td>June 6th, 2023
    </td>
-   <td>
+   <td>June 26th, 2023
    </td>
   </tr>
   <tr>
@@ -39,9 +41,9 @@
    </td>
    <td>Gradebook.cpp file
    </td>
-   <td>
+   <td>June 6th, 2023
    </td>
-   <td>
+   <td>June 26th, 2023
    </td>
   </tr>
   <tr>
@@ -49,13 +51,15 @@
    </td>
    <td>Report & Recording
    </td>
-   <td>
+   <td>June 6th, 2023
    </td>
-   <td>
+   <td>June 26th, 2023
    </td>
   </tr>
 </table>
 
+
+*All group members completed their own contribution
 
 ## **Program Summary**
 
@@ -69,15 +73,37 @@ Before starting, please make sure that you have downloaded and extracted all 3 p
 
 Copy and paste the following line into your terminal to compile and run:
 
-g++ main.cpp gradebook.cpp gradebook.h -o prog && ./prog *YOUR TEXT FILE HERE*
+g++ main.cpp gradebook.cpp gradebook.h -o prog && ./prog 
 
-Compile time will be near-instant. Runtime will vary based on the size of your text file.
+Compile time will be near-instant, however may vary based on the size of your file. 
+
+## **Possible function calls**
+
+IndiGrade(STRING Students name) - Returns grade of a specific student
+
+CategoryGrade(STRING Category name) - Returns average grade of a specific category
+
+CourseGradeOption(INT Option) - Returns a grade based on a specified option
+
+printAll() - Prints all individual grades for each student
+
+changeName(STRING Old name, STRING New name - Changes the name of a student
+
+changeCategory(STRING name, STRING new category) - Changes the category of an individual student
+
+changeGrade(STRING name, INT new grade) - Changes a grade of an individual student
+
+addNew(STRING name, STRING category, INT ) - Adds an entry for a new student
+
+save() - Saves gradebook data
+
+## **Example of program in use**
 
 ## **Purpose of each program file**
 
 Main.cpp - Read in users file data, get grades from specific categories, call to gradebook.cpp file with the file data.
 
-Gradebook.cpp - Defines all functions that can be called in the gradebook class.
+Gradebook.cpp - Defines and runs all functions that can be called in the gradebook class.
 
 Gradebook.h - Creates the gradebook class and vectors for students names, grades, and category percentages. Declares all functions that can be used in gradebook.cpp, linking them to the class. 
 
@@ -87,43 +113,43 @@ Gradebook.h - Creates the gradebook class and vectors for students names, grades
 
 Int main
 
-	Declare float and string variables to store grades, grade percentage, the students name, etc.
+	DECLARE String for the filename
 
-	//In this specific order:
+	COUT Message to enter filename
 
-	Cin student name (STRING)
+	CIN the filename
 
-	Cin the category weight percentages (FLOAT)
+	OPEN the file
 
-	Cin the grades for HW assignments (FLOAT)
+	IF the file does not open
 
-	Cin the grades for quizzes (FLOAT)
+		COUT Error opening file
 
-	Cin the grades for exams (FLOAT)
+		END Program
 
-	Cin the grades for projects (FLOAT)
+	DECLARE Vector for individuals names
 
-	Calculate average quiz, hw, project, and exam grades based on the weight percentages.
+DECLARE Vector for categories
 
-	//Final has a different grade percentage than the other projects, so must be done separately
+DECLARE Vector for grades
 
-	Calculate the final project grades based on weight percentage
+DECLARE Vector for individuals names
 
-	Add all averages and store them in a finalGrade variable
+WHILE we get the line on the input file
 
-	Output the students name and their final grade
+	DECLARE String for name and category
 
-## **Main.cpp Flowchart**
+	DECLARE Int for the grade
 
+	IF we continue to input grades
 
+		PUSH BACK all vectors
 
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image1.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
+	CLOSE file
 
+	CALL Gradebook file to perform further operations  
 
-![alt_text](images/image1.png "image_tooltip")
-
-
-## **Gradebook.h pseudocode**
+## **Gradebook.h pseudocode **
 
 CLASS GradeBook
 
@@ -267,9 +293,11 @@ END CLASS
 
 //Include Libraries and gradebook.h
 
+//Gradebook constructor
+
 CONSTRUCTOR Gradebook (filename, vectors for individual names, grades, overalls, and categories)
 
-THIS pointer filename
+	THIS pointer filename
 
 THIS pointer individual name vector
 
@@ -279,7 +307,9 @@ THIS pointer overall grades vector
 
 THIS pointer categories vector
 
-FUNCTION IndiGrade(STRING name)
+//Returns the grade of an individual student
+
+CLASS Gradebook FUNCTION IndiGrade(STRING name)
 
 	FOR the length of individual name vector
 
@@ -287,7 +317,9 @@ FUNCTION IndiGrade(STRING name)
 
 			Return the grade of that students name
 
-FUNCTION CategoryGrade(STRING category)
+//Returns the average grade for a specific category
+
+CLASS Gradebook FUNCTION CategoryGrade(STRING category)
 
 	Create Total and count variables set to 0
 
@@ -308,7 +340,9 @@ FUNCTION CategoryGrade(STRING category)
 
 		Return 0
 
-FUNCTION CourseGradeOption(INT option)
+//Returns the course grade based on the specified option
+
+CLASS Gradebook FUNCTION CourseGradeOption(INT option)
 
 	Create Double Total = 0
 
@@ -332,11 +366,15 @@ FUNCTION CourseGradeOption(INT option)
 
 		Return overall grade
 
+//Print all individual grades
+
 CLASS Gradebook FUNCTION printAll
 
 	FOR the length of the individual names vector
 
 		COUT the individuals names and their grade
+
+//Change the name of an individual student
 
 CLASS Gradebook FUNCTION changeName(STRING oldname, STRING newname)
 
@@ -346,6 +384,8 @@ CLASS Gradebook FUNCTION changeName(STRING oldname, STRING newname)
 
 			Individual name vector at i equals newname
 
+//Change the category of an individual student
+
 CLASS Gradebook FUNCTION changeCategory(STRING name, STRING newcategory)
 
 	FOR the length of the individual names vector 
@@ -353,6 +393,8 @@ CLASS Gradebook FUNCTION changeCategory(STRING name, STRING newcategory)
 		IF the name matches a name in the individual names vector
 
 			Categories vector at i equals newcategory
+
+//Change the grade of an individual student
 
 CLASS Gradebook FUNCTION changeGrade(STRING name, FLOAT grade)
 
@@ -362,12 +404,16 @@ CLASS Gradebook FUNCTION changeGrade(STRING name, FLOAT grade)
 
 			Grades vector at i equals grade
 
+//Adds a new entry for an individual student 
+
 CLASS Gradebook FUNCTION addNew(STRING newInd, STRING category, FLOAT grade) \
 	THIS pointer Individual names vector, pushback newInd
 
 	THIS pointer Categories vector, pushback category
 
 	THIS pointer Grades name vector, pushback grade
+
+//Saves gradebook data
 
 CLASS Gradebook FUNCTION save()
 
