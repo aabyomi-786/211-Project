@@ -46,6 +46,11 @@ int main() {
 
     GradeBook gradeBook(filename, individualNames, categories, grades, overall);
 
+    // Print the category for each individual
+    for (size_t i = 0; i < individualNames.size(); ++i) {
+        cout << individualNames[i] << "'s Category: " << categories[i] << endl;
+    }
+
     // Evaluate individual deliverables
     double assignment1Grade = gradeBook.IndiGrade("Assignment 1");
     cout << "Assignment 1: " << assignment1Grade << endl;
