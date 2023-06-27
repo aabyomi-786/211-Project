@@ -2,47 +2,38 @@
 #define GRADEBOOK_H
 
 #include <iostream>
-#include <string>
+#include <fstream>
+#include <sstream>
 #include <vector>
+#include <string>
+#include <iomanip>
 
 class GradeBook {
-private:
-    std::string file_name; //The name of the file to save the gradebook data
-    std::vector<std::string> individualNames; //Vector storing the names of individual students
-    std::vector<std::string> categories; //Vector storing the categories of grades
-    std::vector<int> grades; //Vector storing the grades of individual students 
-    std::vector<int> overall; //Vector storing the overal course grades
-
 public:
-    //Gradebook constructor
-    GradeBook(std::string file_name, std::vector<std::string> individualNames, std::vector<std::string> categories, std::vector<int> grades, std::vector<int> overall);
-    
-    //Returns the grade of an individual student
-    double IndiGrade(std::string name);
-    
-    //Returns the average grade for a specific category
-    double CategoryGrade(std::string category);
-    
-    //Returns the course grade based on the specific option 
-    double CourseGradeOption(int option);
-    
-    //Prints all individual grades 
-    void printAll();
-    
-    //Changes the name of an individual student 
-    void changeName(std::string oldName, std::string newName);
-    
-    // Changes the category of an individual student
-    void changeCategory(std::string individualName, std::string newCategory);
-    
-    //Changes the grade of an individual student
-    void changeGrade(std::string individualName, int newGrade);
-    
-    //Adds a new entry for an individual student
-    void addNew(std::string newIndividual, std::string newCategory, int newGrade);
-    
-    //Saves gradebook data to a file 
-    void save();
+    GradeBook(const std::string& filename,
+              const std::vector<std::string>& individualNames,
+              const std::vector<std::string>& categories,
+              const std::vector<int>& grades,
+              const std::vector<int>& overall);
+
+    double IndiGrade(const std::string& deliverable) const;
+    double CategoryGrade(const std::string& category) const;
+    void printAll() const;
+    void CourseGradeOption(int option) const;
+    void changeName(const std::string& deliverable, const std::string& newName);
+    void changeCategory(const std::string& deliverable, const std::string& newCategory);
+    void changeGrade(const std::string& deliverable, int newGrade);
+    void addNew(const std::string& name, const std::string& category, int grade);
+    void save() const;
+
+private:
+    std::string filename;
+    std::vector<std::string> individualNames;
+    std::vector<std::string> categories;
+    std::vector<int> grades;
+    std::vector<int> overall;
+
+    int findDeliverableIndex(const std::string& deliverable) const;
 };
 
-#endif 
+#endif  // GRADEBOOK_H
