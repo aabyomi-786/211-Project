@@ -1,4 +1,8 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
 #include "gradebook.h"
+
 
 GradeBook::GradeBook(const std::string& filename,
                      const std::vector<std::string>& individualNames,
