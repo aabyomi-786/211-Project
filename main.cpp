@@ -1,37 +1,70 @@
 #include <iostream>
-#include<iomanip>
 #include <fstream>
-#include"gradebook.h"
+#include <sstream>
+#include <vector>
+#include <string>
+#include <iomanip>
+#include "gradebook.h"
+
 using namespace std;
 
 int main() {
-   // declaring strings, categories, grades and overalls
-    std::vector<std::string> individualNames = {"Assignment 1", "Assignment 2"};
-    std::vector<std::string> categories = {"Assignments", "Exams"};
-    std::vector<int> grades = {90, 85};
-    std::vector<int> overall = {88};
+    string filename;
+    cout << "Enter the name of the input file: ";
+    cin >> filename;
 
-    GradeBook gradeBook("grades.txt", individualNames, categories, grades, overall);
+    ifstream inputFile(filename);
+
+    if (!inputFile) {
+        cerr << "Error opening file: " << filename << endl;
+        return 1;
+    }
+
+    // Read data from the file
+    vector<string> individualNames;
+    vector<string> categories;
+    vector<int> grades;
+    vector<int> overall;
+
+    string line;
+    while (getline(inputFile, line)) {
+        stringstream ss(line);
+        string name;
+        string category;
+        int grade;
+
+        ss >> name;
+
+        while (ss >> category && ss >> grade) {
+            individualNames.push_back(name);
+            categories.push_back(category);
+            grades.push_back(grade);
+        }
+    }
+
+    inputFile.close();
+
+    GradeBook gradeBook(filename, individualNames, categories, grades, overall);
 
     // Evaluate individual deliverables
     double assignment1Grade = gradeBook.IndiGrade("Assignment 1");
-    std::cout << "Assignment 1: " << assignment1Grade << std::endl;
+    cout << "Assignment 1: " << assignment1Grade << endl;
 
     // Gets grades from a specified category and the category total
     double assignmentsTotal = gradeBook.CategoryGrade("Assignments");
-    std::cout << "Assisgnments Total: " << assignmentsTotal << std::endl;
+    cout << "Assignments Total: " << assignmentsTotal << endl;
 
-    // Get all grades in their respective categories and a course overalls
+    // Get all grades in their respective categories and a course overall
     gradeBook.printAll();
     gradeBook.CourseGradeOption(2);
 
-    // Make the name, grade and cateory changes
+    // Make the name, grade, and category changes
     gradeBook.changeName("Assignment 1", "New Assignment");
     gradeBook.changeCategory("New Assignment", "New Category");
     gradeBook.changeGrade("New Assignment", 95);
     gradeBook.addNew("Assignment 3", "Assignments", 80);
 
-    // Save the changes to the input file which outputs all results
+    // Save the changes to the input file, which outputs all results
     gradeBook.save();
 
     return 0;
